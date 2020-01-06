@@ -5,6 +5,15 @@ public class server
 {
   public static void main(String[] args)
   {
-    System.out.println("Test");
+    try
+    {
+      ServerSocket main_server = new ServerSocket(9000);
+
+      main_server.accept();
+    }
+    catch (IOException err)
+    {
+      System.out.println(err);
+    }
   }
 }
