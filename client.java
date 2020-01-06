@@ -7,7 +7,13 @@ public class Client
   {
     try
     {
-      Socket main_client = new Socket("localhost", 9000);
+      Socket client = new Socket("localhost", 9000);
+
+      DataOutputStream client_output = new DataOutputStream(client.getOutputStream());
+
+      client_output.writeUTF("coucou");
+
+      client.close();
     }
     catch (IOException err)
     {
