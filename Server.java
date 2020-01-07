@@ -12,7 +12,7 @@ public class Server
 
       DataInputStream server_input = new DataInputStream(connection.getInputStream());
 
-      System.out.println("CLIENT: " + server_input.readUTF());
+      System.out.println("SERVER: " + server_input.readUTF() + " received from " + connection);
 
       server.close();
     }

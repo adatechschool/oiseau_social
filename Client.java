@@ -12,6 +12,7 @@ public class Client
       DataOutputStream client_output = new DataOutputStream(client.getOutputStream());
 
       client_output.writeUTF("coucou");
+      System.out.println("« coucou » sent to server");
 
       client.close();
     }
