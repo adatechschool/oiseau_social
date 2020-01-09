@@ -16,7 +16,15 @@ public class Server {
 	static class LoginContext implements HttpHandler {
 		@Override
 		public void handle(HttpExchange request) throws IOException {
-      String login = "<h1>Coucou Marion</h1>";
+
+      Path file_path = FileSystems.getDefault().getPath("html", "login.html");
+      BufferedReader file_reader = Files.newBufferedReader(file_path);
+
+      String login = "", line;
+      while ((line = file_reader.readLine()) != null)
+      {
+        login += line;
+      }
 
 			request.sendResponseHeaders(200, login.length());
 			OutputStream os = request.getResponseBody();
