@@ -1,24 +1,29 @@
-import java.net.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.InetSocketAddress;
 
-public class Server
-{
-  public static void main(String[] args)
-  {
-    try
-    {
-      ServerSocket server = new ServerSocket(9000);
-      Socket connection = server.accept();
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
-      DataInputStream server_input = new DataInputStream(connection.getInputStream());
+public class Server {
 
-      System.out.println("SERVER: " + server_input.readUTF() + " received from " + connection);
+	public static void main(String[] args) throws Exception {
+		HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+		server.createContext("/test", new MyHandler());
+		server.setExecutor(null); // creates a default executor
+		server.start();
+	}
 
-      server.close();
-    }
-    catch (IOException err)
-    {
-      System.out.println(err);
-    }
-  }
+	static class MyHandler implements HttpHandler {
+		@Override
+		public void handle(HttpExchange t) throws IOException {
+			String response = "<h1>This is the response</h1>";
+
+			t.sendResponseHeaders(200, response.length());
+			OutputStream os = t.getResponseBody();
+			os.write(response.getBytes());
+			os.close();
+		}
+	}
 }
