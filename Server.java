@@ -8,13 +8,14 @@ public class Server {
 
 	public static void main(String[] args) throws Exception {
 		HttpServer oiseau_social = HttpServer.create(new InetSocketAddress(8000), 0);
-		oiseau_social.createContext("/login", new LoginContext());
-    oiseau_social.createContext("/", new RootContext());
+    HttpContext coucou = oiseau_social.createContext("/", new RootHandler());
+    HttpContext coucou = oiseau_social.createContext("/login", new RootHandler());
+    System.out.println(coucou.getPath());
 		oiseau_social.setExecutor(null); // creates a default executor
 		oiseau_social.start();
 	}
 
-	static class RootContext implements HttpHandler {
+	static class RootHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange exchange) throws IOException {
       String coucou = "Hello world!";
@@ -26,7 +27,7 @@ public class Server {
     }
   }
 
-	static class LoginContext implements HttpHandler {
+	static class LoginHandler implements HttpHandler {
 		@Override
 		public void handle(HttpExchange exchange) throws IOException {
 
